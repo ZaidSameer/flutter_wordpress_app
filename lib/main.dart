@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 content: Text(message["notification"]["body"]),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: new Text("Dismiss"),
                     onPressed: () {
                       Navigator.of(context).pop();

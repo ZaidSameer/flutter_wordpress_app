@@ -90,163 +90,167 @@ class _SingleArticleState extends State<SingleArticle> {
 
     return Scaffold(
       body: Container(
-          decoration: BoxDecoration(color: Colors.white70),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      child: Hero(
-                        tag: heroId,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(60.0)),
-                          child: ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.3),
-                                BlendMode.overlay),
-                            child: articleVideo != ""
-                                ? articleVideo.contains("youtube")
-                                    ? Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0,
-                                            MediaQuery.of(context).padding.top,
-                                            0,
-                                            0),
-                                        decoration:
-                                            BoxDecoration(color: Colors.black),
-                                        child: HtmlWidget(
-                                          """
+        decoration: BoxDecoration(color: Colors.white70),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    child: Hero(
+                      tag: heroId,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(60.0)),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.3), BlendMode.overlay),
+                          child: articleVideo != ""
+                              ? articleVideo.contains("youtube")
+                                  ? Container(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          MediaQuery.of(context).padding.top,
+                                          0,
+                                          0),
+                                      decoration:
+                                          BoxDecoration(color: Colors.black),
+                                      child: HtmlWidget(
+                                        """
                                       <iframe src="https://www.youtube.com/embed/$youtubeUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                       """,
-                                          webView: true,
-                                        ),
-                                      )
-                                    : articleVideo.contains("dailymotion")
-                                        ? Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0,
-                                                MediaQuery.of(context)
-                                                    .padding
-                                                    .top,
-                                                0,
-                                                0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.black),
-                                            child: HtmlWidget(
-                                              """
+                                        webView: true,
+                                      ),
+                                    )
+                                  : articleVideo.contains("dailymotion")
+                                      ? Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              MediaQuery.of(context)
+                                                  .padding
+                                                  .top,
+                                              0,
+                                              0),
+                                          decoration: BoxDecoration(
+                                              color: Colors.black),
+                                          child: HtmlWidget(
+                                            """
                                       <iframe frameborder="0"
                                       src="https://www.dailymotion.com/embed/video/$dailymotionUrl?autoplay=1&mute=1"
                                       allowfullscreen allow="autoplay">
                                       </iframe>
                                       """,
-                                              webView: true,
-                                            ),
-                                          )
-                                        : Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0,
-                                                MediaQuery.of(context)
-                                                    .padding
-                                                    .top,
-                                                0,
-                                                0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.black),
-                                            child: HtmlWidget(
-                                              """
+                                            webView: true,
+                                          ),
+                                        )
+                                      : Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              MediaQuery.of(context)
+                                                  .padding
+                                                  .top,
+                                              0,
+                                              0),
+                                          decoration: BoxDecoration(
+                                              color: Colors.black),
+                                          child: HtmlWidget(
+                                            """
                                       <video autoplay="" playsinline="" controls>
                                       <source type="video/mp4" src="$articleVideo">
                                       </video>
                                       """,
-                                              webView: true,
-                                            ),
-                                          )
-                                : Image.network(
-                                    article.image,
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
+                                            webView: true,
+                                          ),
+                                        )
+                              : Image.network(
+                                  article.image,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: MediaQuery.of(context).padding.top,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Html(
+                      data: "<h1>" + article.title + "</h1>",
+                      padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      customTextStyle: (dom.Node node, TextStyle baseStyle) {
+                        if (node is dom.Element) {
+                          switch (node.localName) {
+                            case "h1":
+                              return Theme.of(context)
+                                  .textTheme
+                                  .headline1
+                                  .merge(TextStyle(fontSize: 20));
+                          }
+                        }
+                        return baseStyle;
+                      },
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE3E3E3),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                      margin: EdgeInsets.all(16),
+                      child: Text(
+                        article.category,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 45,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(article.avatar),
+                        ),
+                        title: Text(
+                          "By " + article.author,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        subtitle: Text(
+                          article.date,
+                          style: TextStyle(fontSize: 11),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(16, 36, 16, 50),
+                      child: HtmlWidget(
+                        article.content,
+                        webView: true,
+                        textStyle: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ],
                 ),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Html(
-                          data: "<h1>" + article.title + "</h1>",
-                          padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                          customTextStyle:
-                              (dom.Node node, TextStyle baseStyle) {
-                            if (node is dom.Element) {
-                              switch (node.localName) {
-                                case "h1":
-                                  return Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      .merge(TextStyle(fontSize: 20));
-                              }
-                            }
-                            return baseStyle;
-                          }),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFFE3E3E3),
-                            borderRadius: BorderRadius.circular(3)),
-                        padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                        margin: EdgeInsets.all(16),
-                        child: Text(
-                          article.category,
-                          style: TextStyle(color: Colors.black, fontSize: 11),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(article.avatar),
-                          ),
-                          title: Text(
-                            "By " + article.author,
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          subtitle: Text(
-                            article.date,
-                            style: TextStyle(fontSize: 11),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(16, 36, 16, 50),
-                        child: HtmlWidget(
-                          article.content,
-                          webView: true,
-                          textStyle: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                relatedPosts(_futureRelatedArticles)
-              ],
-            ),
-          )),
+              ),
+              relatedPosts(_futureRelatedArticles),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           decoration: BoxDecoration(color: Colors.white10),
@@ -256,49 +260,51 @@ class _SingleArticleState extends State<SingleArticle> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               FutureBuilder<dynamic>(
-                  future: favArticle,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        decoration: BoxDecoration(),
-                        child: IconButton(
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                            size: 24.0,
-                          ),
-                          onPressed: () {
-                            // Favourite post
-                            favArticleBloc.deleteFavArticleById(article.id);
-                            setState(() {
-                              favArticle =
-                                  favArticleBloc.getFavArticle(article.id);
-                            });
-                          },
-                        ),
-                      );
-                    }
+                future: favArticle,
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
                     return Container(
                       decoration: BoxDecoration(),
                       child: IconButton(
                         padding: EdgeInsets.all(0),
                         icon: Icon(
-                          Icons.favorite_border,
+                          Icons.favorite,
                           color: Colors.red,
                           size: 24.0,
                         ),
                         onPressed: () {
-                          favArticleBloc.addFavArticle(article);
-                          setState(() {
-                            favArticle =
-                                favArticleBloc.getFavArticle(article.id);
-                          });
+                          // Favourite post
+                          favArticleBloc.deleteFavArticleById(article.id);
+                          setState(
+                            () {
+                              favArticle =
+                                  favArticleBloc.getFavArticle(article.id);
+                            },
+                          );
                         },
                       ),
                     );
-                  }),
+                  }
+                  return Container(
+                    decoration: BoxDecoration(),
+                    child: IconButton(
+                      padding: EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
+                      onPressed: () {
+                        favArticleBloc.addFavArticle(article);
+                        setState(() {
+                          favArticle = favArticleBloc.getFavArticle(article.id);
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
               Container(
                 child: IconButton(
                   padding: EdgeInsets.all(0),
@@ -309,11 +315,12 @@ class _SingleArticleState extends State<SingleArticle> {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Comments(article.id),
-                          fullscreenDialog: true,
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Comments(article.id),
+                        fullscreenDialog: true,
+                      ),
+                    );
                   },
                 ),
               ),
@@ -352,9 +359,10 @@ class _SingleArticleState extends State<SingleArticle> {
                   "Related Posts",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Poppins"),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Poppins",
+                  ),
                 ),
               ),
               Column(
@@ -373,9 +381,7 @@ class _SingleArticleState extends State<SingleArticle> {
                   );
                 }).toList(),
               ),
-              SizedBox(
-                height: 24,
-              )
+              SizedBox(height: 24)
             ],
           );
         } else if (articleSnapshot.hasError) {
@@ -385,13 +391,14 @@ class _SingleArticleState extends State<SingleArticle> {
               child: Text("${articleSnapshot.error}"));
         }
         return Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            height: 150,
-            child: Loading(
-                indicator: BallBeatIndicator(),
-                size: 60.0,
-                color: Theme.of(context).accentColor));
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width,
+          height: 150,
+          child: Loading(
+              indicator: BallBeatIndicator(),
+              size: 60.0,
+              color: Theme.of(context).accentColor),
+        );
       },
     );
   }

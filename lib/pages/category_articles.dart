@@ -108,10 +108,14 @@ class _CategoryArticlesState extends State<CategoryArticles> {
       body: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
-            controller: _controller,
-            scrollDirection: Axis.vertical,
-            child: Column(
-                children: <Widget>[categoryPosts(_futureCategoryArticles)])),
+          controller: _controller,
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: <Widget>[
+              categoryPosts(_futureCategoryArticles),
+            ],
+          ),
+        ),
       ),
     );
   }

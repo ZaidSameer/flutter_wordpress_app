@@ -219,7 +219,7 @@ class _SearchState extends State<Search> {
                   width: 250,
                 ),
                 Text("No Internet Connection."),
-                FlatButton.icon(
+                TextButton.icon(
                   icon: Icon(Icons.refresh),
                   label: Text("Reload"),
                   onPressed: () {
@@ -232,13 +232,14 @@ class _SearchState extends State<Search> {
           );
         }
         return Container(
-            alignment: Alignment.center,
-            width: 300,
-            height: 150,
-            child: Loading(
-                indicator: BallBeatIndicator(),
-                size: 60.0,
-                color: Theme.of(context).accentColor));
+          alignment: Alignment.center,
+          width: 300,
+          height: 150,
+          child: Loading(
+              indicator: BallBeatIndicator(),
+              size: 60.0,
+              color: Theme.of(context).accentColor),
+        );
       },
     );
   }

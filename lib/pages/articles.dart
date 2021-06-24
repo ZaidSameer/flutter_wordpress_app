@@ -165,7 +165,8 @@ class _ArticlesState extends State<Articles> {
                       child: Loading(
                           indicator: BallBeatIndicator(),
                           size: 60.0,
-                          color: Theme.of(context).accentColor))
+                          color: Theme.of(context).accentColor),
+                    )
                   : Container()
             ],
           );
@@ -193,9 +194,9 @@ class _ArticlesState extends State<Articles> {
           if (articleSnapshot.hasData) {
             if (articleSnapshot.data.length == 0) return Container();
             return Row(
-                children: articleSnapshot.data.map((item) {
-              final heroId = item.id.toString() + "-featured";
-              return InkWell(
+              children: articleSnapshot.data.map((item) {
+                final heroId = item.id.toString() + "-featured";
+                return InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -204,8 +205,10 @@ class _ArticlesState extends State<Articles> {
                       ),
                     );
                   },
-                  child: articleBoxFeatured(context, item, heroId));
-            }).toList());
+                  child: articleBoxFeatured(context, item, heroId),
+                );
+              }).toList(),
+            );
           } else if (articleSnapshot.hasError) {
             return Container(
               alignment: Alignment.center,
@@ -219,7 +222,7 @@ class _ArticlesState extends State<Articles> {
                     width: 250,
                   ),
                   Text("No Internet Connection."),
-                  FlatButton.icon(
+                  TextButton.icon(
                     icon: Icon(Icons.refresh),
                     label: Text("Reload"),
                     onPressed: () {
@@ -232,13 +235,14 @@ class _ArticlesState extends State<Articles> {
             );
           }
           return Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              height: 280,
-              child: Loading(
-                  indicator: BallBeatIndicator(),
-                  size: 60.0,
-                  color: Theme.of(context).accentColor));
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: 280,
+            child: Loading(
+                indicator: BallBeatIndicator(),
+                size: 60.0,
+                color: Theme.of(context).accentColor),
+          );
         },
       ),
     );

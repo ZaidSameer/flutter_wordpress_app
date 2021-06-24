@@ -127,8 +127,8 @@ class _SettingsState extends State<Settings> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton(
-                          padding: EdgeInsets.all(0),
+                      TextButton(
+                          // padding: EdgeInsets.all(0),
                           onPressed: () async {
                             const url = 'https://flutterblog.crumet.com';
                             if (await canLaunch(url)) {
@@ -141,8 +141,8 @@ class _SettingsState extends State<Settings> {
                             "flutterblog.crumet.com",
                             style: TextStyle(color: Colors.black54),
                           )),
-                      FlatButton(
-                          padding: EdgeInsets.all(0),
+                      TextButton(
+                          // padding: EdgeInsets.all(0),
                           onPressed: () async {
                             const url = 'mailto:info@crumet.com';
                             if (await canLaunch(url)) {

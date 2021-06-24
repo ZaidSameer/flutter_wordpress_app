@@ -127,12 +127,16 @@ class _AddCommentState extends State<AddComment> {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 36.0),
                           height: 120,
-                          child: RaisedButton.icon(
+                          child: ElevatedButton.icon(
                             icon: Icon(
                               Icons.check,
                               color: Colors.white,
                             ),
-                            color: Theme.of(context).primaryColor,
+                            style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            // color: Theme.of(context).primaryColor,
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
@@ -142,10 +146,19 @@ class _AddCommentState extends State<AddComment> {
                                   if (back) {
                                     Navigator.of(context).pop();
                                   } else {
-                                    final snackBar = SnackBar(
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop('dialog');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
                                         content: Text(
-                                            'Error while posting comment. Try again.'));
-                                    Scaffold.of(context).showSnackBar(snackBar);
+                                            'Error while posting comment. Try again.'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                    // final snackBar = SnackBar(
+                                    //     content: Text(
+                                    //         'Error while posting comment. Try again.'));
+                                    // Scaffold.of(context).showSnackBar(snackBar);
                                   }
                                 });
                               }
